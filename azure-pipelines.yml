@@ -24,6 +24,8 @@ steps:
         cp $(credentials.secureFilePath) ~/.aws/credentials
         aws configure set region us-east-1
         pip install aws-cdk.core aws-cdk.aws-s3 aws-cdk.aws-s3-notifications
+        chmod +x /home/vsts/work/1/s/infrastructure.py
+        python /home/vsts/work/1/s/infrastructure.py
         npm install -g aws-cdk
         cdk deploy --app '$(System.DefaultWorkingDirectory)/infrastructure.py' --all --require-approval never
       workingDirectory: '$(System.DefaultWorkingDirectory)'
