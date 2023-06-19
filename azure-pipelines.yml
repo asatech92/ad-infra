@@ -26,7 +26,7 @@ steps:
         pip install aws-cdk.core aws-cdk.aws-s3 aws-cdk.aws-s3-notifications
         cdk deploy --all --require-approval never
         disableAutoCwd: true
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
       
   - task: PublishPipelineArtifact@1
     inputs:
