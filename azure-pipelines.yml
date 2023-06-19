@@ -25,8 +25,7 @@ steps:
         aws configure set region us-east-1
         pip install aws-cdk.core aws-cdk.aws-s3 aws-cdk.aws-s3-notifications
         npm install -g aws-cdk
-        cdk deploy --all --require-approval never
-        disableAutoCwd: true
+        cdk deploy --app '$(System.DefaultWorkingDirectory)/infrastructure.py' --all --require-approval never
       workingDirectory: '$(System.DefaultWorkingDirectory)'
       
   - task: PublishPipelineArtifact@1
