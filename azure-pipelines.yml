@@ -25,11 +25,10 @@ steps:
         aws configure set region us-east-1
         pip install aws-cdk.core aws-cdk.aws-s3 aws-cdk.aws-s3-notifications
         cdk deploy --all --require-approval never
-              disableAutoCwd: true
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
+        disableAutoCwd: true
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
       
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: 'cloudformation'
       artifact: 'CloudFormationTemplate'
-
