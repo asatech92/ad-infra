@@ -1,0 +1,36 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+
+  - task: AWSShellScript@1
+    displayName: 'CDK Deploy and Generate CloudFormation Template'
+    inputs:
+      awsCredentials: 'Azuretos3serviceconn-Oaktree-Test'
+      regionName: 'us-east-1'
+      scriptType: 'inline'
+      inlineScript: |
+        pip install awscli
+        mkdir ~/.aws
+        cp $(credentials.secureFilePath) ~/.aws/credentials
+        aws configure set region us-east-1
+        pip install aws-cdk.core aws-cdk.aws-s3 aws-cdk.aws-s3-notifications
+        cdk deploy --all --require-approval never
+        cdk synth --no-staging > cloudformation/template.yaml
+      disableAutoCwd: true
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: 'cloudformation'
+      artifact: 'CloudFormationTemplate'
+
