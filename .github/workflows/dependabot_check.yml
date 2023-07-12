@@ -22,7 +22,7 @@ jobs:
             "https://api.github.com/repos/ad-infra/dependabot/vulnerabilities")
 
           # Check if Severity: High vulnerability is present in the report
-          if echo "$report" | jq '.[] | select(.severity == "High")' > /dev/null; then
+          if echo "$report" | jq '.[] | select(.severity == "high")' > /dev/null; then
             echo "Severity: High vulnerability found. Blocking the pull request."
             exit 1
           else
