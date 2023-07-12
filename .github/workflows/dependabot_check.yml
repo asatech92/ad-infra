@@ -17,9 +17,15 @@ jobs:
 
       - name: Run Dependabot Checks
         run: |
-          # Run your custom script or command to check for Dependabot reports
-          # and exit with a non-zero status code if Severity: High vulnerability is found
-          # Example command: my_custom_script.sh
+          # Retrieve vulnerability report from Dependabot API
+          report=$(curl -s -H "Authorization: Bearer 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" \
+            "https://api.github.com/repos/ad-infra/dependabot/vulnerabilities")
 
-          # You can use the Dependabot API or CLI to retrieve vulnerability information
-          # and check for Severity: High vulnerabilities.
+          # Check if Severity: High vulnerability is present in the report
+          if echo "$report" | jq '.[] | select(.severity == "High")' > /dev/null; then
+            echo "Severity: High vulnerability found. Blocking the pull request."
+            exit 1
+          else
+            echo "No Severity: High vulnerabilities found. Pull request can proceed."
+            exit 0
+          fi
