@@ -18,7 +18,7 @@ jobs:
       - name: Run Dependabot Checks
         run: |
           # Retrieve vulnerability report from Dependabot API
-          report=$(curl -s -H "Authorization: Bearer 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" \
+          report=$(curl -s -H "Authorization: Bearer ${{ secrets.DEPENDABOT_API_TOKEN }}" \
             "https://api.github.com/repos/ad-infra/dependabot/vulnerabilities")
 
           # Check if Severity: High vulnerability is present in the report
