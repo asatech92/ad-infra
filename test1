@@ -1,5 +1,0 @@
-      - name: Run Dependabot Checks
-        run: |
-          # Retrieve vulnerability report from Dependabot API
-          report=$(curl -s -H "Authorization: Bearer ghp_d84FWtMtZi1zW78U6QRcWwS71973fe48x2LE" \
-            "https://api.github.com/repos/asatech92/ad-infra/dependabot/alerts")
